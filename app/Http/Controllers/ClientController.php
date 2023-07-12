@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -66,5 +67,13 @@ class ClientController extends Controller
     public function destroy(Client $client)
     {
         //
+    }
+
+    public function pdf(Client $client) {
+        $pdf = Pdf::loadView('pdf.client',[
+            'client' => $client
+        ]);
+
+        return $pdf->stream();
     }
 }
